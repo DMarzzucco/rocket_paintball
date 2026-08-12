@@ -3,8 +3,8 @@ use std::time::{Duration, Instant};
 
 const CODE: u32 = 15412435;
 const MAX_ATTEMPTS: u8 = 3;
-const LOCK_DURATION: Duration = Duration::from_secs(2 * 10);
-const ARM_DURATION: Duration = Duration::from_secs(4 * 10);
+const LOCK_DURATION: Duration = Duration::from_secs(2 * 10);// 2 minutos de espera
+const ARM_DURATION: Duration = Duration::from_secs(4 * 10);// 40 minutos
 
 #[derive(Debug)]
 enum PanelState {
