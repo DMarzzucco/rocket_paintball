@@ -68,6 +68,7 @@ impl Panel {
             PanelState::Fired => {
                 println!("El cohete ya fue lanzado. No hay nada que hacer.");
             }
+
             PanelState::Locked { until } => {
                 let remaining = until.saturating_duration_since(Instant::now());
                 println!("Panel bloqueado. Esperá {}s.", remaining.as_secs());
