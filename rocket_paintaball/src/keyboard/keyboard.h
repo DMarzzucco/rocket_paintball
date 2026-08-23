@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Keypad.h>
 
 class KeyboardClass
