@@ -1,7 +1,11 @@
 #include "keyboard.h"
+#include "config/Config.h"
 
 const byte ROWS = 4;
 const byte COLS = 4;
+
+byte rowPins[ROWS] = KEYPAD_ROW_PINS;
+byte colPins[COLS] = KEYPAD_COL_PINS;
 
 char keys[ROWS][COLS] = {
     {'1', '2', '3', 'A'},
@@ -9,8 +13,6 @@ char keys[ROWS][COLS] = {
     {'7', '8', '9', 'C'},
     {'*', '0', '#', 'D'}
 };
-byte rowPins[ROWS] = {23, 22, 21, 19};
-byte colPins[COLS] = {18, 5, 17, 16};
 
 KeyboardClass::KeyboardClass() : keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS) {}
 

@@ -1,10 +1,5 @@
 #include "screen.h"
-
-#define I2C_SDA 25
-#define I2C_SCL 26
-
-#define LCD_COLS 16
-#define LCD_ROWS 2
+#include "config/Config.h"
 
 ScreenClass::ScreenClass() : lcd(0x27, LCD_COLS, LCD_ROWS), cursorCol(0), cursorRow(0) {}
 

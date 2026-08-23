@@ -1,10 +1,10 @@
 #include "auth.h"
+#include "config/Config.h"
 
 AuthClass::AuthClass(
     KeyboardClass &keyboard,
     ScreenClass &screen) : keyboard(keyboard), screen(screen) {}
 
-const char password[] = "147B";
 const byte PASSWORD_LEN = sizeof(password) - 1;
 
 char inputBuffer[PASSWORD_LEN + 1];
