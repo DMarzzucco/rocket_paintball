@@ -8,6 +8,7 @@ class AuthClass
 private:
     KeyboardClass &keyboard;
     ScreenClass &screen;
+    void buzzer_green();
 
 public:
     AuthClass(KeyboardClass &keyboard, ScreenClass &screen);

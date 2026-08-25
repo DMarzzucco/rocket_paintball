@@ -16,6 +16,9 @@ AuthClass auth= AuthClass(keyboard, screen);
 
 
 void setup() {
+  pinMode(LED_PIN_RED, OUTPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(LED_PIN_GREEN, OUTPUT);
   screen.init();
 }
 

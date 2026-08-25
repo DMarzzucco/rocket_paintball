@@ -16,6 +16,7 @@ void ScreenClass::init()
     delay(3000);
     lcd.clear();
     lcd.setCursor(0, 0);
+    lcd.print("INGRESAR-CLAVE:");
 }
 
 void ScreenClass::writeChar(char c)
@@ -31,7 +32,7 @@ void ScreenClass::writeChar(char c)
         }
         lcd.setCursor(cursorCol, cursorRow);
     }
-    lcd.setCursor(cursorCol, cursorRow);
+    lcd.setCursor(cursorCol, 1);
     lcd.print(c);
     cursorCol++;
 }
@@ -39,7 +40,9 @@ void ScreenClass::writeChar(char c)
 void ScreenClass::resetCursor()
 {
     lcd.clear();
-    lcd.setCursor(0, 0);
+    lcd.setCursor(0,0);
+    lcd.print("INGRESAR-CLAVE:");
+    lcd.setCursor(0, 1);
     cursorCol = 0;
     cursorRow = 0;
 }
