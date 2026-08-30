@@ -7,13 +7,13 @@
 #include "keyboard/keyboard.h"
 #include "screen/screen.h"
 #include "auth/auth.h"
+#include "buzzer/buzzer.h"
 #include "config/Config.h"
-
 
 KeyboardClass keyboard = KeyboardClass();
 ScreenClass screen = ScreenClass();
-AuthClass auth= AuthClass(keyboard, screen);
-
+BuzzerClass buzzer = BuzzerClass();
+AuthClass auth= AuthClass(keyboard, screen, buzzer);
 
 void setup() {
   pinMode(LED_PIN_RED, OUTPUT);

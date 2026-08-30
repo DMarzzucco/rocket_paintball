@@ -15,5 +15,8 @@ private:
     void writeChar(char c);
     void disabledLauncher ();
     void enabledLaucnher();
+    void timerFinish();
     void resetCursor();
+    void wrongPassword();
+    void showCountdown(int secondsLeft);
 };

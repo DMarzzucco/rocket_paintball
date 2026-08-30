@@ -3,20 +3,26 @@
 
 ScreenClass::ScreenClass() : lcd(0x27, LCD_COLS, LCD_ROWS), cursorCol(0), cursorRow(0) {}
 
-void ScreenClass::init()
+void ScreenClass::showCountdown(int secondsLeft)
 {
-    Wire.begin(I2C_SDA, I2C_SCL);
-    lcd.init();
-    lcd.backlight();
-    lcd.clear();
+    int minutes = secondsLeft / 60;
+    int seconds = secondsLeft % 60;
+
     lcd.setCursor(0, 0);
-    lcd.print("Desactivar");
-    lcd.setCursor(0, 1);
-    lcd.print("lanzamiento");
-    delay(3000);
-    lcd.clear();
+    lcd.print("                ");
     lcd.setCursor(0, 0);
-    lcd.print("INGRESAR-CLAVE:");
+    lcd.print("TIME: ");
+    if (minutes < 10)
+    {
+        lcd.print("0");
+    }
+    lcd.print(minutes);
+    lcd.print(":");
+    if (seconds < 10)
+    {
+        lcd.print("0");
+    }
+    lcd.print(seconds);
 }
 
 void ScreenClass::writeChar(char c)
@@ -36,11 +42,26 @@ void ScreenClass::writeChar(char c)
     lcd.print(c);
     cursorCol++;
 }
+void ScreenClass::init()
+{
+    Wire.begin(I2C_SDA, I2C_SCL);
+    lcd.init();
+    lcd.backlight();
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Desactivar");
+    lcd.setCursor(0, 1);
+    lcd.print("lanzamiento");
+    delay(3000);
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("INGRESAR-CLAVE:");
+}
 
 void ScreenClass::resetCursor()
 {
     lcd.clear();
-    lcd.setCursor(0,0);
+    lcd.setCursor(0, 0);
     lcd.print("INGRESAR-CLAVE:");
     lcd.setCursor(0, 1);
     cursorCol = 0;
@@ -51,9 +72,9 @@ void ScreenClass::disabledLauncher()
 {
     lcd.clear();
     lcd.setCursor(0, 0);
-    lcd.print("Lanzamiento");
+    lcd.print("LANZAMIENTO");
     lcd.setCursor(0, 1);
-    lcd.print("desactivad");
+    lcd.print("DESACTIVADO");
     delay(2000);
 }
 
@@ -61,8 +82,28 @@ void ScreenClass::enabledLaucnher()
 {
     lcd.clear();
     lcd.setCursor(0, 0);
-    lcd.print("Pass incorrecta.");
+    lcd.print("LANZAMIENTO");
     lcd.setCursor(0, 1);
-    lcd.print("BOOOM.");
+    lcd.print("ACTIVADO");
+    delay(500);
+}
+
+void ScreenClass::timerFinish()
+{
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("GAME OVER");
+    lcd.setCursor(0, 1);
+    lcd.print("BOOOM!!.");
     delay(2000);
+}
+
+void ScreenClass::wrongPassword()
+{
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("CONTRASENIA");
+    lcd.setCursor(0, 1);
+    lcd.print("INCORRECTA");
+    delay(500);
 }

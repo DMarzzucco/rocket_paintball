@@ -3,7 +3,8 @@
 
 AuthClass::AuthClass(
     KeyboardClass &keyboard,
-    ScreenClass &screen) : keyboard(keyboard), screen(screen) {}
+    ScreenClass &screen,
+    BuzzerClass &buzzer) : keyboard(keyboard), screen(screen), buzzer(buzzer) {}
 
 const byte PASSWORD_LEN = sizeof(password) - 1;
 
@@ -16,8 +17,37 @@ void AuthClass::resetInput()
     screen.resetCursor();
 }
 
+void AuthClass::checkTimer()
+{
+    if (!timerRunning)
+    {
+        return;
+    }
+
+    unsigned long elapsed = millis() - timerStart;
+
+    if (elapsed >= TIMER_DURATION)
+    {
+        timerRunning = false;
+        screen.timerFinish();
+        buzzer.buzzer_red();
+        resetInput();
+        return;
+    }
+
+    int secondsLeft = (TIMER_DURATION - elapsed) / 1000 + 1;
+    if (secondsLeft != lastSecondsLeft)
+    {
+        lastSecondsLeft = secondsLeft;
+        screen.showCountdown(secondsLeft);
+        buzzer.buzzer_tick();
+    }
+}
+
 void AuthClass::login()
 {
+    checkTimer();
+
     char key = keyboard.getKey();
 
     if (!key)
@@ -30,20 +60,32 @@ void AuthClass::login()
         inputBuffer[inputIndex] = '\0';
         if (inputIndex == PASSWORD_LEN && strcmp(inputBuffer, password) == 0)
         {
-            buzzer_green();
-            screen.disabledLauncher();
-            while (true)
+            buzzer.buzzer_green();
+            if (timerRunning)
             {
+                timerRunning = false;
+                screen.disabledLauncher();
+                resetInput();
+            }
+            else
+            {
+                screen.enabledLaucnher();
+                resetInput();
+                timerRunning = true;
+                timerStart = millis();
+                lastSecondsLeft = -1;
+                inputIndex = 0;
             }
         }
         else
         {
-            digitalWrite(LED_PIN_RED, HIGH);
-            digitalWrite(BUZZER_PIN, HIGH);
-            screen.enabledLaucnher();
-            delay(3000);
-            digitalWrite(LED_PIN_RED, LOW);
-            digitalWrite(BUZZER_PIN, LOW);
+            screen.wrongPassword();
+            buzzer.buzzer_wrong();
+            if (timerRunning)
+            {
+                timerStart -= WRONG_PASSWORD_PENALTY;
+                checkTimer();
+            }
             resetInput();
         }
         return;
@@ -61,22 +103,4 @@ void AuthClass::login()
         inputIndex++;
         screen.writeChar(key);
     }
-}
-
-void AuthClass::buzzer_green() {
-    digitalWrite(LED_PIN_GREEN, HIGH);
-    digitalWrite(LED_PIN_RED, HIGH);
-    digitalWrite(BUZZER_PIN, HIGH);
-    delay(350);
-    digitalWrite(LED_PIN_GREEN, LOW);
-    digitalWrite(LED_PIN_RED, LOW);
-    digitalWrite(BUZZER_PIN, LOW);
-    delay(350);
-    digitalWrite(LED_PIN_GREEN, HIGH);
-    digitalWrite(LED_PIN_RED, HIGH);
-    digitalWrite(BUZZER_PIN, HIGH);
-    delay(350);
-    digitalWrite(LED_PIN_GREEN, LOW);
-    digitalWrite(LED_PIN_RED, LOW);
-    digitalWrite(BUZZER_PIN, LOW);
 }
