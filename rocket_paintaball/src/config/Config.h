@@ -11,6 +11,19 @@
 #define LED_PIN_RED 12
 #define LED_PIN_GREEN 2
 
+//puzzle (juego de cables)
+#define PUZZLE_PIN_1 14
+#define PUZZLE_PIN_2 4
+#define PUZZLE_PIN_3 32
+#define PUZZLE_PIN_4 33
+
+const int puzzlePins[] = {PUZZLE_PIN_1, PUZZLE_PIN_2, PUZZLE_PIN_3, PUZZLE_PIN_4};
+const int PUZZLE_WIRE_COUNT = sizeof(puzzlePins) / sizeof(puzzlePins[0]);
+
+
+//const int puzzlePattern[] = {PUZZLE_PIN_3, PUZZLE_PIN_1, PUZZLE_PIN_4, PUZZLE_PIN_2};
+const int puzzlePattern[] = {PUZZLE_PIN_1, PUZZLE_PIN_2, PUZZLE_PIN_3, PUZZLE_PIN_4};
+
 //buzzer
 #define BUZZER_PIN 13
 
@@ -20,3 +33,4 @@
 
 //password
 const char password[] = "147B";
+

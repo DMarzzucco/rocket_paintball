@@ -8,18 +8,21 @@
 #include "screen/screen.h"
 #include "auth/auth.h"
 #include "buzzer/buzzer.h"
+#include "puzzle/puzzle.h"
 #include "config/Config.h"
 
 KeyboardClass keyboard = KeyboardClass();
 ScreenClass screen = ScreenClass();
 BuzzerClass buzzer = BuzzerClass();
-AuthClass auth= AuthClass(keyboard, screen, buzzer);
+PuzzleClass puzzle = PuzzleClass();
+AuthClass auth= AuthClass(keyboard, screen, buzzer, puzzle);
 
 void setup() {
   pinMode(LED_PIN_RED, OUTPUT);
   pinMode(BUZZER_PIN, OUTPUT);
   pinMode(LED_PIN_GREEN, OUTPUT);
   screen.init();
+  puzzle.begin();
 }
 
 void loop() {

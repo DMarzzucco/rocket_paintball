@@ -3,6 +3,7 @@
 #include "../screen/screen.h"
 #include "../keyboard/keyboard.h"
 #include "../buzzer/buzzer.h"
+#include "../puzzle/puzzle.h"
 
 class AuthClass
 {
@@ -10,6 +11,7 @@ private:
     KeyboardClass &keyboard;
     ScreenClass &screen;
     BuzzerClass &buzzer;
+    PuzzleClass &puzzle;
     bool timerRunning = false;
     unsigned long timerStart = 0;
     int lastSecondsLeft = -1;
@@ -20,9 +22,10 @@ private:
     void buzzer_tick();
     void buzzer_wrong();
     void checkTimer();
+    void checkPuzzle();
 
 public:
-    AuthClass(KeyboardClass &keyboard, ScreenClass &screen, BuzzerClass &buzzer);
+    AuthClass(KeyboardClass &keyboard, ScreenClass &screen, BuzzerClass &buzzer, PuzzleClass &puzzle);
     void login();
     void resetInput();
 };

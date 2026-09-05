@@ -4,7 +4,8 @@
 AuthClass::AuthClass(
     KeyboardClass &keyboard,
     ScreenClass &screen,
-    BuzzerClass &buzzer) : keyboard(keyboard), screen(screen), buzzer(buzzer) {}
+    BuzzerClass &buzzer,
+    PuzzleClass &puzzle) : keyboard(keyboard), screen(screen), buzzer(buzzer), puzzle(puzzle) {}
 
 const byte PASSWORD_LEN = sizeof(password) - 1;
 
@@ -44,9 +45,35 @@ void AuthClass::checkTimer()
     }
 }
 
+void AuthClass::checkPuzzle()
+{
+    if (!timerRunning)
+    {
+        return;
+    }
+
+    PuzzleResult result = puzzle.check();
+
+    if (result == PuzzleResult::DEFUSED)
+    {
+        timerRunning = false;
+        buzzer.buzzer_green();
+        screen.disabledLauncher();
+        resetInput();
+    }
+    else if (result == PuzzleResult::DETONATED)
+    {
+        timerRunning = false;
+        buzzer.buzzer_red();
+        screen.timerFinish();
+        resetInput();
+    }
+}
+
 void AuthClass::login()
 {
     checkTimer();
+    checkPuzzle();
 
     char key = keyboard.getKey();
 
@@ -71,6 +98,7 @@ void AuthClass::login()
             {
                 screen.enabledLaucnher();
                 resetInput();
+                puzzle.arm();
                 timerRunning = true;
                 timerStart = millis();
                 lastSecondsLeft = -1;
