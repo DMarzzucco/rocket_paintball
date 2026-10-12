@@ -3,9 +3,10 @@
 
 AuthClass::AuthClass(
     KeyboardClass &keyboard,
+    TriggerClass &trigger,
     ScreenClass &screen,
     BuzzerClass &buzzer,
-    PuzzleClass &puzzle) : keyboard(keyboard), screen(screen), buzzer(buzzer), puzzle(puzzle) {}
+    PuzzleClass &puzzle) : keyboard(keyboard), trigger(trigger), screen(screen), buzzer(buzzer), puzzle(puzzle) {}
 
 const byte PASSWORD_LEN = sizeof(password) - 1;
 
@@ -30,7 +31,8 @@ void AuthClass::checkTimer()
     if (elapsed >= TIMER_DURATION)
     {
         timerRunning = false;
-        screen.timerFinish();
+        screen.gameOver();
+        trigger.shoot();
         buzzer.buzzer_red();
         resetInput();
         return;
@@ -65,7 +67,8 @@ void AuthClass::checkPuzzle()
     {
         timerRunning = false;
         buzzer.buzzer_red();
-        screen.timerFinish();
+        screen.gameOver();
+        trigger.shoot();
         resetInput();
     }
 }
