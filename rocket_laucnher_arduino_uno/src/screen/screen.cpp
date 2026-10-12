@@ -44,7 +44,7 @@ void ScreenClass::writeChar(char c)
 }
 void ScreenClass::init()
 {
-    Wire.begin(I2C_SDA, I2C_SCL);
+    Wire.begin();
     lcd.init();
     lcd.backlight();
     lcd.clear();
@@ -88,7 +88,7 @@ void ScreenClass::enabledLaucnher()
     delay(500);
 }
 
-void ScreenClass::timerFinish()
+void ScreenClass::gameOver()
 {
     lcd.clear();
     lcd.setCursor(0, 0);

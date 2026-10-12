@@ -1,6 +1,7 @@
 #pragma once
 
 #include <LiquidCrystal_I2C.h>
+#include <Arduino.h>
 
 class ScreenClass
 {
@@ -15,7 +16,7 @@ private:
     void writeChar(char c);
     void disabledLauncher ();
     void enabledLaucnher();
-    void timerFinish();
+    void gameOver();
     void resetCursor();
     void wrongPassword();
     void showCountdown(int secondsLeft);

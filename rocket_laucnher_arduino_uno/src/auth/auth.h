@@ -4,11 +4,13 @@
 #include "../keyboard/keyboard.h"
 #include "../buzzer/buzzer.h"
 #include "../puzzle/puzzle.h"
+#include "../trigger/trigger.h"
 
 class AuthClass
 {
 private:
     KeyboardClass &keyboard;
+    TriggerClass &trigger;
     ScreenClass &screen;
     BuzzerClass &buzzer;
     PuzzleClass &puzzle;
@@ -25,7 +27,7 @@ private:
     void checkPuzzle();
 
 public:
-    AuthClass(KeyboardClass &keyboard, ScreenClass &screen, BuzzerClass &buzzer, PuzzleClass &puzzle);
+    AuthClass(KeyboardClass &keyboard, TriggerClass &trigger, ScreenClass &screen, BuzzerClass &buzzer, PuzzleClass &puzzle);
     void login();
     void resetInput();
 };
